@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Greeting;
 import com.example.demo.services.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,10 +23,28 @@ public class GreetingController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
 
-        String message = greetingService.getGreetingMessage(firstName, lastName);
+        String message;
+        if (firstName != null && lastName != null) {
+            message = "Hello, " + firstName + " " + lastName + "!";
+        } else if (firstName != null) {
+            message = "Hello, " + firstName + "!";
+        } else if (lastName != null) {
+            message = "Hello, " + lastName + "!";
+        } else {
+            message = "Hello, World!";
+        }
+
+        // Save the greeting message in the database
+        greetingService.saveGreeting(message);
+
         Map<String, String> response = new HashMap<>();
         response.put("message", message);
         return response;
+    }
+
+    @GetMapping("/all")
+    public List<Greeting> getAllGreetings() {
+        return greetingService.getAllGreetings();
     }
 
     @PostMapping

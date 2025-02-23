@@ -1,9 +1,19 @@
 package com.example.demo.services;
 
+import com.example.demo.model.Greeting;
+import com.example.demo.repository.GreetingRespository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GreetingService {
+
+    private final GreetingRespository greetingRepository;
+
+    public GreetingService(GreetingRespository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
 
     public String getGreetingMessage() {
         return "Hello";
@@ -19,4 +29,14 @@ public class GreetingService {
             return "Hello, World!";
         }
     }
+
+    public Greeting saveGreeting(String message) {
+        Greeting greeting = new Greeting(message);
+        return greetingRepository.save(greeting);
+    }
+
+    public List<Greeting> getAllGreetings() {
+        return greetingRepository.findAll();
+    }
+
 }
