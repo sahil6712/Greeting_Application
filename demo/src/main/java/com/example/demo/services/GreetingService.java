@@ -36,10 +36,6 @@ public class GreetingService {
         return greetingRepository.save(greeting);
     }
 
-    public List<Greeting> getAllGreetings() {
-        return greetingRepository.findAll();
-    }
-
     // To search message by id
     public String getGreetingMessageById(Long id) {
         Optional<Greeting> greeting = greetingRepository.findById(id);
@@ -49,6 +45,11 @@ public class GreetingService {
         else {
             return "There is no such message with entered id";
         }
+    }
+
+    // Method to list all the greetings
+    public List<Greeting> listAllGreetings() {
+        return greetingRepository.findAll();
     }
 
 }
