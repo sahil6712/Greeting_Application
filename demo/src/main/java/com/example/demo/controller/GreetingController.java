@@ -64,12 +64,7 @@ public class GreetingController {
         return response;
     }
 
-    @DeleteMapping
-    public Map<String, String> deleteGreeting() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", greetingService.getGreetingMessage());
-        return response;
-    }
+
 
     // Get the list of all greetings
     @GetMapping("/all")
@@ -81,6 +76,14 @@ public class GreetingController {
     @GetMapping("/update/{id}/{message}")
     public String getUpdateMessage(@PathVariable Long id, @PathVariable String message) {
         return greetingService.updateMessage(id,message);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Map<String, String> deleteGreeting(@PathVariable Long id) {
+        String message = greetingService.deleteGreetingById(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return response;
     }
 
 }
