@@ -3,8 +3,10 @@ package com.example.demo.services;
 import com.example.demo.model.Greeting;
 import com.example.demo.repository.GreetingRespository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -50,6 +52,18 @@ public class GreetingService {
     // Method to list all the greetings
     public List<Greeting> listAllGreetings() {
         return greetingRepository.findAll();
+    }
+
+    // Method to update the message in the repository
+    public String updateMessage(Long id, String newMessage) {
+        List<Greeting> greetings = greetingRepository.findAll();
+        for(Greeting greet:greetings) {
+            if(Objects.equals(greet.getId(), id)) {
+                greet.setMessage(newMessage);
+                return greet.getMessage();
+            }
+        }
+        return "No such id present in repository";
     }
 
 }
