@@ -47,6 +47,11 @@ public class GreetingController {
         return greetingService.getAllGreetings();
     }
 
+    @GetMapping("/{id}")
+    public String getGreetingMessageById(@PathVariable Long id) {
+        return greetingService.getGreetingMessageById(id);
+    }
+
     @PostMapping
     public Map<String, String> postGreeting(@RequestBody Map<String, String> request) {
         Map<String, String> response = new HashMap<>();

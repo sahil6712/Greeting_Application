@@ -5,6 +5,7 @@ import com.example.demo.repository.GreetingRespository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GreetingService {
@@ -37,6 +38,17 @@ public class GreetingService {
 
     public List<Greeting> getAllGreetings() {
         return greetingRepository.findAll();
+    }
+
+    // To search message by id
+    public String getGreetingMessageById(Long id) {
+        Optional<Greeting> greeting = greetingRepository.findById(id);
+        if(greeting.isPresent()) {
+            return greeting.get().getMessage();
+        }
+        else {
+            return "There is no such message with entered id";
+        }
     }
 
 }
